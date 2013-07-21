@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.phonegap.example" version="0.0.1" versionCode="1">
+  <name>Mobile Quran - Rashad Khalifa</name>
+  <author email="gunaseelan.perumal@gmail.com" href="blogya.in/qcodes/index.html">Guna</author>
+  <feature name="http://api.phonegap.com/1.0/network"/>
+  <feature name="http://api.phonegap.com/1.0/device"/>
+  <feature name="http://api.phonegap.com/1.0/media"/>
+  <feature name="http://api.zend.com/1.0/storage"/>
+  <feature name="http://api.phonegap.com/1.0/notification"/>
+</widget>
