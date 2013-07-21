@@ -129,11 +129,21 @@ function ToggleAutoPlay(mode){
 	}
 
 }
+function increase(){
+	var fontSize = $("#VerseContent").css("font-size").split('px')[0];
+	fontSize = (parseInt(fontSize) + 1) + "px";
+	$("#VerseContent").css('font-size',fontSize);
+}
+function decrease(){
+	var fontSize = $("#VerseContent").css("font-size").split('px')[0];
+	fontSize = (parseInt(fontSize) - 1) + "px";
+	$("#VerseContent").css('font-size',fontSize);
+}
 </script>
 </head>
 <body onload='Next();'>
 <div id='page' data-role='page'>
-<div class='header' id='header' data-role='header' data-position="fixed" style='text-align:center;'>Daily Quran</div>
+<div class='header' id='header' data-role='header' data-position="fixed" style='text-align:center;'>Quran - Rashad Khalifa</div>
 <div data-role='content' id='VerseContent' class='content'>[ Content ]</div>
 <div id='audiotd' class='caudiotd'><audio controls id='AudioSRC' src=''> Audio not supported in this browser</audio></div>
 <div data-role='footer' id='navigation' class='footer' style='text-align:center;'>
@@ -144,13 +154,16 @@ function ToggleAutoPlay(mode){
 </div>
 
 <div data-role='footer' id='navigation2' class='footer' data-theme='e'  style='text-align:center;'>
-<table>
+<table align='center' border='0'>
 <tr>
-<td>Sura.Verse</td>
-<td><input type="text" name="sura" id="sura" value="1.1" placeholder='1.1' style='width:75px;'/></td>
-<td><a href="" data-role="button" data-icon="search" onClick='GoTo();' data-inline='true'>Search</a></td>
-<td><a href="http://blogya.in/qcodes/info.html" data-role="button" data-icon="info" onClick='GoTo();' data-iconpos='notext' data-inline='true'>Info</a></td>
-<td><a href="http://blogya.in/qcodes/help.html" data-role="button" data-icon="help" onClick='GoTo();' data-iconpos='notext' data-inline='true'>Help</a></td>
+<td valign='middle'>Sura.Verse</td>
+<td valign='middle'><input type="text" name="sura" id="sura" value="1.1" placeholder='1.1' style='width:75px;'/></td>
+<td valign='middle'><a href="" data-role="button" data-icon="search" onClick='GoTo();' data-inline='true' data-iconpos='notext'>Search</a></td>
+<td valign='middle'><a href="" data-role="button" data-icon="plus" onClick='increase();' data-iconpos='notext' data-inline='true'>Increase Font Size</a></td>
+<td><a href="" data-role="button" data-icon="minus" onClick='decrease();' data-iconpos='notext' data-inline='true'>Reduce Font Size</a></td>
+<td valign='middle'><a href="http://blogya.in/quran/info.html" data-role="button" data-icon="info" data-iconpos='notext' data-inline='true'>Info</a></td>
+<!-- <td valign='middle'><a href="http://blogya.in/quran/help.html" data-role="button" data-icon="help" data-iconpos='notext' data-inline='true'>Help</a></td>-->
+
 </tr>
 </table>
 </div>
@@ -182,6 +195,7 @@ BlogYa.in/qcodes
 
     $(document).ready(function() {
     	  fixgeometry();
+    	  $("#VerseContent").css('font-size','20px');
     	  $(window).bind("mobileinit orientationchange resize pageshow",  function(){fixgeometry();});
     	  //$(document).bind("mobileinit orientationchange resize pageshow", function(){fixgeometry();});
     	  
