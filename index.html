@@ -56,12 +56,14 @@ xmlhttp.onreadystatechange=function()
     {
      	jsondata=eval ("(" + xmlhttp.responseText + ")"); 
      	document.getElementById('VerseContent').innerHTML= jsondata.VerseNumber + ') ' +jsondata.Verse;
-     	//document.getElementById('VerseNumber').innerHTML=jsondata.VerseNumber;
-     	document.getElementById('AudioSRC').src=jsondata.AudioSRC;     	
      	id = jsondata.id;
-     	document.getElementById('AudioSRC').load();
-     	document.getElementById('AudioSRC').play();
      	SetID(id);
+     	var tav = $("#audio-vol").val();
+     	if( tav == "On" ){
+         	document.getElementById('AudioSRC').src=jsondata.AudioSRC;
+     		document.getElementById('AudioSRC').load();
+     		document.getElementById('AudioSRC').play();
+     	}
     }
   }
 
@@ -121,11 +123,10 @@ function ToggleAutoPlay(mode){
 	
 	as = document.getElementById('AudioSRC');
 	if(mode == 1){
-	 	as.addEventListener('ended', handler, false);     		
-	 	ap.disabled=true;
+	 	as.addEventListener('ended', handler, false);
+	 	Next();
 	}else{
 		as.removeEventListener('ended', handler, false); 
-		ap.disabled=false;
 	}
 
 }
@@ -139,41 +140,41 @@ function decrease(){
 	fontSize = (parseInt(fontSize) - 1) + "px";
 	$("#VerseContent").css('font-size',fontSize);
 }
+var temp_audio_vol=0;
 </script>
 </head>
 <body onload='Next();'>
 <div id='page' data-role='page'>
 <div class='header' id='header' data-role='header' data-position="fixed" style='text-align:center;'>Quran - Rashad Khalifa</div>
-<div data-role='content' id='VerseContent' class='content'>[ Content ]</div>
+<div data-role='content' data-theme='c' id='VerseContent' class='content'>[ Content ]</div>
 <div id='audiotd' class='caudiotd'><audio controls id='AudioSRC' src=''> Audio not supported in this browser</audio></div>
 <div data-role='footer' id='navigation' class='footer' style='text-align:center;'>
-<a href="" data-role="button" data-icon="arrow-l" onClick='Prev();' data-inline='true'>Prev</a>
-<a href="" data-role="button" data-icon="arrow-r" onClick='Next();' data-inline='true'>Next</a>
-<a href="" data-role="button" data-icon="forward" onClick='ToggleAutoPlay(1);' id='autoplay' data-mini='true' data-inline='true'>Auto</a>
-<a href="" data-role="button" data-icon="minus" onClick='ToggleAutoPlay(0);' id='manualplay' data-mini='true' data-inline='true'>Man</a>
+<a href="" data-role="button" data-theme='e' data-icon="arrow-l" onClick='Prev();' data-inline='true'>Prev</a>
+<a href="" data-role="button" data-theme='e' data-icon="arrow-r" onClick='Next();' data-inline='true'>Next</a>
+<a href="" data-role="button" data-theme='e' data-icon="forward" onClick='ToggleAutoPlay(1);' id='autoplay' data-inline='true'>Auto</a>
+<a href="" data-role="button" data-theme='e' data-icon="minus" onClick='ToggleAutoPlay(0);' id='manualplay' data-inline='true'>Man</a>
 </div>
 
-<div data-role='footer' id='navigation2' class='footer' data-theme='e'  style='text-align:center;'>
-<table align='center' border='0'>
+<div data-role='footer' data-theme='b' id='navigation2' class='footer' style='text-align:center;'>
+<table align='center'>
 <tr>
-<td valign='middle'>Sura.Verse</td>
-<td valign='middle'><input type="text" name="sura" id="sura" value="1.1" placeholder='1.1' style='width:75px;'/></td>
-<td valign='middle'><a href="" data-role="button" data-icon="search" onClick='GoTo();' data-inline='true' data-iconpos='notext'>Search</a></td>
-<td valign='middle'><a href="" data-role="button" data-icon="plus" onClick='increase();' data-iconpos='notext' data-inline='true'>Increase Font Size</a></td>
-<td><a href="" data-role="button" data-icon="minus" onClick='decrease();' data-iconpos='notext' data-inline='true'>Reduce Font Size</a></td>
-<td valign='middle'><a href="http://blogya.in/quran/info.html" data-role="button" data-icon="info" data-iconpos='notext' data-inline='true'>Info</a></td>
-<!-- <td valign='middle'><a href="http://blogya.in/quran/help.html" data-role="button" data-icon="help" data-iconpos='notext' data-inline='true'>Help</a></td>-->
-
-</tr>
-</table>
+<td valign='middle'><input type="text"name="sura" id="sura" value="1.1" placeholder='1.1' style='width:75px;'/></td>
+<td valign='middle'>
+<div data-role='controlgroup' id='navigation2' class='footer'  style='text-align:center;'>
+<a href="" data-role="button" data-icon="search" onClick='GoTo();' data-iconpos='notext' data-inline='true'>Go to Sura.Ayat</a>
+<a href="" data-role="button" data-icon="plus" onClick='increase();'  data-iconpos='notext' data-inline='true'>Increase Font Size</a>
+<a href="" data-role="button" data-icon="minus" onClick='decrease();'  data-iconpos='notext' data-inline='true'>Reduce Font Size</a>
+<a href="http://blogya.in/quran/info.html" data-role="button" data-icon="info"  data-iconpos='notext' data-inline='true'>Info</a>
 </div>
-<div data-role='footer' id='footer' data-theme='b' class='footer' style='text-align:center;'>
-BlogYa.in/qcodes
-</div>
-
-</div>
-
-
+</td>
+<td>
+<select name="audio-vol" id="audio-vol" data-role="slider" data-mini='true' title='Audio On/Off'>
+	<option value="Off">Off</option>
+	<option value="On" selected>On</option>
+</select>
+</td></tr></table>
+</div> <!--  END Navigation2 DIV -->
+</div><!--  END PAGE DIV -->
 <script>
 	function fixgeometry() {
       /* Some orientation changes leave the scroll position at something
@@ -195,11 +196,9 @@ BlogYa.in/qcodes
 
     $(document).ready(function() {
     	  fixgeometry();
-    	  $("#VerseContent").css('font-size','20px');
+    	  $("#VerseContent").css('font-size','17px');
     	  $(window).bind("mobileinit orientationchange resize pageshow",  function(){fixgeometry();});
     	  //$(document).bind("mobileinit orientationchange resize pageshow", function(){fixgeometry();});
-    	  
-    	
     });
 </script> 
 </body>
