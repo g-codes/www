@@ -7,5 +7,5 @@
   <feature name="http://api.phonegap.com/1.0/device"/>
   <feature name="http://api.phonegap.com/1.0/media"/>
   <feature name="http://api.zend.com/1.0/storage"/>
-  <icon src="icon.png" width="50" height="50"/>
+  <icon src="icon.png"/>
 </widget>
