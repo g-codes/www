@@ -149,26 +149,23 @@ var temp_audio_vol=0;
 <div data-role='content' data-theme='c' id='VerseContent' class='content'>[ Content ]</div>
 <div id='audiotd' class='caudiotd'><audio controls id='AudioSRC' src=''> Audio not supported in this browser</audio></div>
 <div data-role='footer' id='navigation' class='footer' style='text-align:center;'>
-<a href="" data-role="button" data-theme='e' data-icon="arrow-l" onClick='Prev();' data-inline='true'>Prev</a>
-<a href="" data-role="button" data-theme='e' data-icon="arrow-r" onClick='Next();' data-inline='true'>Next</a>
-<a href="" data-role="button" data-theme='e' data-icon="forward" onClick='ToggleAutoPlay(1);' id='autoplay' data-inline='true'>Auto</a>
-<a href="" data-role="button" data-theme='e' data-icon="minus" onClick='ToggleAutoPlay(0);' id='manualplay' data-inline='true'>Man</a>
+<a href="" data-role="button" data-icon="arrow-l" onClick='Prev();' data-inline='true'>Prev</a>
+<a href="" data-role="button" data-icon="arrow-r" onClick='Next();' data-inline='true'>Next</a>
+<a href="" data-role="button" data-icon="forward" onClick='ToggleAutoPlay(1);' id='autoplay' data-inline='true'>Auto</a>
+<a href="" data-role="button" data-icon="minus" onClick='ToggleAutoPlay(0);' id='manualplay' data-inline='true'>Man</a>
 </div>
 
-<div data-role='footer' data-theme='b' id='navigation2' class='footer' style='text-align:center;'>
-<table align='center'>
+
+<div data-role='footer' data-theme='e' id='navigation2' style='text-align:center;padding:0px;'>
+<table align='center' cellpadding='2' cellspacing='2'>
 <tr>
-<td valign='middle'><input type="text"name="sura" id="sura" value="1.1" placeholder='1.1' style='width:75px;'/></td>
-<td valign='middle'>
-<div data-role='controlgroup' id='navigation2' class='footer'  style='text-align:center;'>
-<a href="" data-role="button" data-icon="search" onClick='GoTo();' data-iconpos='notext' data-inline='true'>Go to Sura.Ayat</a>
-<a href="" data-role="button" data-icon="plus" onClick='increase();'  data-iconpos='notext' data-inline='true'>Increase Font Size</a>
-<a href="" data-role="button" data-icon="minus" onClick='decrease();'  data-iconpos='notext' data-inline='true'>Reduce Font Size</a>
-<a href="http://blogya.in/quran/info.html" data-role="button" data-icon="info"  data-iconpos='notext' data-inline='true'>Info</a>
-</div>
-</td>
+<td valign='middle'><input type="text" name="sura" id="sura" value="1.1" placeholder='1.1' style='width:75px;margin:0px;padding:5px;' data-inline='true'/></td>
+<td valign='middle'><a href="" data-role="button" data-icon="search" onClick='GoTo();' data-iconpos='notext' data-inline='true'>Go to Sura.Ayat</a></td>
+<td valign='middle'> <a href="" data-role="button" data-icon="plus" onClick='increase();'  data-iconpos='notext' data-inline='true'>Increase Font Size</a></td>
+<td valign='middle'><a href="" data-role="button" data-icon="minus" onClick='decrease();'  data-iconpos='notext' data-inline='true'>Reduce Font Size</a></td>
+<td valign='middle'><a href="http://blogya.in/quran/info.html" data-role="button" data-icon="info"  data-iconpos='notext' data-inline='true'>Info</a></td>
 <td>
-<select name="audio-vol" id="audio-vol" data-role="slider" data-mini='true' title='Audio On/Off'>
+<select name="audio-vol" id="audio-vol" data-role="slider" data-mini='true' title='Audio On/Off' data-inline='true'>
 	<option value="Off">Off</option>
 	<option value="On" selected>On</option>
 </select>
@@ -191,7 +188,7 @@ var temp_audio_vol=0;
       
       /* Trim margin/border/padding height */
       content_height -= (content.outerHeight() - content.height());
-      content.height(content_height - (content_height *.30));
+      content.height(content_height - (content_height *.25));
     }; /* fixgeometry */
 
     $(document).ready(function() {
