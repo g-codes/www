@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="in.blogya.quran" version="1.0.0" versionCode="1">
   <name>Quran - Rashad Khalifa</name>
-  <author email="gunaseelan.perumal@gmail.com" href="blogya.in/quran">Guna</author>
+  <author email="blogyain@yahoo.com" href="blogya.in/quran">Guna</author>
   <description>Quran in Mobile with text, audio of Rashad Khalifa - English</description>
   <feature name="http://api.phonegap.com/1.0/network"/>
   <feature name="http://api.phonegap.com/1.0/device"/>
   <feature name="http://api.phonegap.com/1.0/media"/>
   <feature name="http://api.zend.com/1.0/storage"/>
-  <icon src='icon.png'>
+  <icon src="icon.png">
 </widget>
