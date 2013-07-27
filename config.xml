@@ -3,9 +3,4 @@
   <name>Quran - Rashad Khalifa</name>
   <author email="blogyain@yahoo.com" href="blogya.in/quran">Guna</author>
   <description>Quran in Mobile with text, audio of Rashad Khalifa - English</description>
-  <feature name="http://api.phonegap.com/1.0/network"/>
-  <feature name="http://api.phonegap.com/1.0/device"/>
-  <feature name="http://api.phonegap.com/1.0/media"/>
-  <feature name="http://api.zend.com/1.0/storage"/>
-  <icon src="icon.png"/>
 </widget>
