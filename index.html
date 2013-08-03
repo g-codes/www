@@ -20,9 +20,6 @@
         html, body {
           width: 100%;
         }
-
-        .content h1.landscape { display: block }
-        .content h1.portrait { display: none }
       }
       @media screen and (orientation: portrait) {
         html, body {
@@ -56,6 +53,7 @@ xmlhttp.onreadystatechange=function()
     {
      	jsondata=eval ("(" + xmlhttp.responseText + ")"); 
      	document.getElementById('VerseContent').innerHTML= jsondata.VerseNumber + ') ' +jsondata.Verse;
+     	$("#sura").val(jsondata.VerseNumber);
      	id = jsondata.id;
      	SetID(id);
      	var tav = $("#audio-vol").val();
@@ -66,7 +64,7 @@ xmlhttp.onreadystatechange=function()
      	}
     }
   }
-
+$.mobile.showPageLoadingMsg();
 xmlhttp.open("GET",tempurl,true);
 xmlhttp.send();
 }
@@ -77,7 +75,7 @@ function GetID(){
 		 if(localStorage.qcodes_verse_id){
 			 return localStorage.qcodes_verse_id;
 		 }else{
-			localStorage.qcodes_verse_id = 1;
+			localStorage.qcodes_verse_id = 0;
 		 }
 	  }
 	else
@@ -89,6 +87,7 @@ function SetID(tempid){
 	if(typeof(Storage)!=="undefined")
 	  {
 		  localStorage.qcodes_verse_id = tempid;
+       	  $.mobile.hidePageLoadingMsg();
 	  }
 	else
 	  {
@@ -148,19 +147,23 @@ var temp_audio_vol=0;
 <div class='header' id='header' data-role='header' data-position="fixed" style='text-align:center;'>Quran - Rashad Khalifa</div>
 <div data-role='content' data-theme='c' id='VerseContent' class='content'>[ Content ]</div>
 <div id='audiotd' class='caudiotd'><audio controls id='AudioSRC' src=''> Audio not supported in this browser</audio></div>
-<div data-role='footer' id='navigation' class='footer' style='text-align:center;'>
-<a href="" data-role="button" data-icon="arrow-l" onClick='Prev();' data-inline='true'>Prev</a>
-<a href="" data-role="button" data-icon="arrow-r" onClick='Next();' data-inline='true'>Next</a>
-<a href="" data-role="button" data-icon="forward" onClick='ToggleAutoPlay(1);' id='autoplay' data-inline='true'>Auto</a>
-<a href="" data-role="button" data-icon="minus" onClick='ToggleAutoPlay(0);' id='manualplay' data-inline='true'>Man</a>
+<div data-role='footer' id='navigation' style='text-align:center;'>
+<table align='center'>
+<tr>
+<td><a href="" data-role="button" data-icon="arrow-l" onClick='Prev();' data-inline='true'>Prev</a></td>
+<td><a href="" data-role="button" data-icon="arrow-r" onClick='Next();' data-inline='true'>Next</a></td>
+<td><select name="autoplay" id="autoplay" data-role="slider" data-mini='true' title='Auto / Manual' data-inline='true' onChange='ToggleAutoPlay($("#autoplay").val())'>
+	<option value="1">Auto</option>
+	<option value="0" selected>Man</option>
+</select></td>
+</tr></table>
 </div>
 
 
 <div data-role='footer' data-theme='e' id='navigation2' style='text-align:center;padding:0px;'>
 <table align='center' cellpadding='2' cellspacing='2'>
 <tr>
-<td valign='middle'><input type="text" name="sura" id="sura" value="1.1" placeholder='1.1' style='width:75px;margin:0px;padding:5px;' data-inline='true'/></td>
-<td valign='middle'><a href="" data-role="button" data-icon="search" onClick='GoTo();' data-iconpos='notext' data-inline='true'>Go to Sura.Ayat</a></td>
+<td valign='middle'><input type="text" name="sura" id="sura" value="1.1" style='width:75px;margin:0px;padding:5px;' data-inline='true'/></td>
 <td valign='middle'> <a href="" data-role="button" data-icon="plus" onClick='increase();'  data-iconpos='notext' data-inline='true'>Increase Font Size</a></td>
 <td valign='middle'><a href="" data-role="button" data-icon="minus" onClick='decrease();'  data-iconpos='notext' data-inline='true'>Reduce Font Size</a></td>
 <td valign='middle'><a href="http://blogya.in/quran/info.html" data-role="button" data-icon="info"  data-iconpos='notext' data-inline='true'>Info</a></td>
@@ -168,8 +171,8 @@ var temp_audio_vol=0;
 <select name="audio-vol" id="audio-vol" data-role="slider" data-mini='true' title='Audio On/Off' data-inline='true'>
 	<option value="Off">Off</option>
 	<option value="On" selected>On</option>
-</select>
-</td></tr></table>
+</select></td>
+</tr></table>
 </div> <!--  END Navigation2 DIV -->
 </div><!--  END PAGE DIV -->
 <script>
@@ -194,7 +197,9 @@ var temp_audio_vol=0;
     $(document).ready(function() {
     	  fixgeometry();
     	  $("#VerseContent").css('font-size','17px');
+    	  $("#autoplay").css('padding-top', '100px;')
     	  $(window).bind("mobileinit orientationchange resize pageshow",  function(){fixgeometry();});
+    	  $("#sura").bind( "change", function(event, ui) {GoTo();});
     	  //$(document).bind("mobileinit orientationchange resize pageshow", function(){fixgeometry();});
     });
 </script> 
