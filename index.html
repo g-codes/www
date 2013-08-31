@@ -1,7 +1,212 @@
+<!DOCTYPE html>
 <html>
-<body>
-Loading ...
-<br><br>
-If loading takes longer, please <a href='http://blogya.in/quran/playstore.php'>click here</a>
-<script>document.location.href='http://blogya.in/quran/playstore.php';</script>
-</body></html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+        </title>
+        <link rel="stylesheet" href="style/jquery.mobile-1.1.1.min.css"       />
+        <link rel="stylesheet" href="style/my.css" />
+        
+        <script src="js/jquery-1.7.2.min.js">
+        </script>
+        <script src="js/jquery.mobile-1.1.1.min.js">
+        </script>
+        <script src="js/my.js">
+        </script>
+        <style>
+      @media screen and (orientation: landscape) {
+        html, body {
+          width: 100%;
+        }
+      }
+      @media screen and (orientation: portrait) {
+        html, body {
+          width: 100%;
+        }
+      }
+    </style>
+<script>
+// Below two lines are for mobile apps
+tempdomain = "http://blogya.in";
+temppath="/dailyquran/";
+tempurl = tempdomain+temppath+"getquran.php?id="+GetID();
+
+//tempdomain= "";
+//temppath='';
+//tempurl = tempdomain+temppath+"getquran.php?id="+GetID();
+function loadXMLDoc()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+     	jsondata=eval ("(" + xmlhttp.responseText + ")"); 
+     	document.getElementById('VerseContent').innerHTML= jsondata.VerseNumber + ') ' +jsondata.Verse;
+     	$("#sura").val(jsondata.VerseNumber);
+     	id = jsondata.id;
+     	SetID(id);
+     	var tav = $("#audio-vol").val();
+     	if( tav == "On" ){
+         	document.getElementById('AudioSRC').src=jsondata.AudioSRC;
+     		document.getElementById('AudioSRC').load();
+     		document.getElementById('AudioSRC').addEventListener('canplay',doplay,false);
+      		//document.getElementById('AudioSRC').play();
+     	}
+    }
+  }
+$.mobile.showPageLoadingMsg();
+xmlhttp.open("GET",tempurl,true);
+xmlhttp.send();
+}
+
+function GetID(){
+	if(typeof(Storage)!=="undefined")
+	  {
+		 if(localStorage.qcodes_verse_id){
+			 return localStorage.qcodes_verse_id;
+		 }else{
+			localStorage.qcodes_verse_id = 0;
+		 }
+	  }
+	else
+	  {
+		  alert('Local Storage is Not Found')
+	  }
+}
+function SetID(tempid){
+	if(typeof(Storage)!=="undefined")
+	  {
+		  localStorage.qcodes_verse_id = tempid;
+       	  $.mobile.hidePageLoadingMsg();
+	  }
+	else
+	  {
+		  alert('Local Storage is Not Available');
+	  }
+}
+function Prev(){
+	SetID(Number(GetID())-1);
+	tempurl = tempdomain+temppath+"getquran.php?id="+GetID();
+	loadXMLDoc();
+}
+function Next(){
+ 	SetID(Number(GetID())+1);
+ 	tempurl = tempdomain+temppath+"getquran.php?id="+GetID();
+	loadXMLDoc();
+}
+function ReSet(){
+ 	SetID(0);
+}
+function GoTo(){
+	tempurl = tempdomain+temppath+"getquran.php?sura="+document.getElementById('sura').value;
+	loadXMLDoc();
+	
+}
+
+var doplay = function(event){
+	document.getElementById('AudioSRC').removeEventListener('canplay', doplay, false);
+	document.getElementById('AudioSRC').play();
+}
+var handler = function(event) {
+	Next();
+	}
+function ToggleAutoPlay(mode){
+	ap = document.getElementById('autoplay');
+	
+	as = document.getElementById('AudioSRC');
+	if(mode == 1){
+	 	as.addEventListener('ended', handler, false);
+	 	Next();
+	}else{
+		as.removeEventListener('ended', handler, false); 
+	}
+
+}
+function increase(){
+	var fontSize = $("#VerseContent").css("font-size").split('px')[0];
+	fontSize = (parseInt(fontSize) + 1) + "px";
+	$("#VerseContent").css('font-size',fontSize);
+}
+function decrease(){
+	var fontSize = $("#VerseContent").css("font-size").split('px')[0];
+	fontSize = (parseInt(fontSize) - 1) + "px";
+	$("#VerseContent").css('font-size',fontSize);
+}
+</script>
+</head>
+<body onload="ToggleAutoPlay(1);">
+<div id='page' data-role='page'>
+<div class='header' id='header' data-role='header' data-position="fixed" style='text-align:center;'>Quran - Rashad Khalifa</div>
+<div data-role='content' data-theme='c' id='VerseContent' class='content'>[ Content ]</div>
+<div id='audiotd' class='caudiotd'><audio controls id='AudioSRC' src=''> Audio not supported in this browser</audio></div>
+<div data-role='footer' id='navigation' style='text-align:center;'>
+<table align='center'>
+<tr>
+<td><a href="" data-role="button" data-icon="arrow-l" onClick='Prev();' data-inline='true'>Prev</a></td>
+<td><a href="" data-role="button" data-icon="arrow-r" onClick='Next();' data-inline='true'>Next</a></td>
+<td><select name="autoplay" id="autoplay" data-role="slider" data-mini='true' title='Auto / Manual' data-inline='true' onChange='ToggleAutoPlay($("#autoplay").val())'>
+	<option value="1" selected>Auto</option>
+	<option value="0">Off</option>
+</select></td>
+</tr></table>
+</div>
+
+
+<div data-role='footer' data-theme='e' id='navigation2' style='text-align:center;padding:0px;'>
+<table align='center' cellpadding='2' cellspacing='2'>
+<tr>
+<td valign='middle'><input type="text" name="sura" id="sura" value="1.1" style='width:75px;margin:0px;padding:5px;' data-inline='true'/></td>
+<td valign='middle'> <a href="" data-role="button" data-icon="plus" onClick='increase();'  data-iconpos='notext' data-inline='true'>Increase Font Size</a></td>
+<td valign='middle'><a href="" data-role="button" data-icon="minus" onClick='decrease();'  data-iconpos='notext' data-inline='true'>Reduce Font Size</a></td>
+<td valign='middle'><a href="http://blogya.in/quran/info.html" data-role="button" data-icon="info"  data-iconpos='notext' data-inline='true'>Info</a></td>
+<td>
+<select name="audio-vol" id="audio-vol" data-role="slider" data-mini='true' title='Audio On/Off' data-inline='true'>
+	<option value="Off">Off</option>
+	<option value="On" selected>On</option>
+</select></td>
+</tr></table>
+</div> <!--  END Navigation2 DIV -->
+</div><!--  END PAGE DIV -->
+<script>
+	function fixgeometry() {
+      /* Some orientation changes leave the scroll position at something
+       * that isn't 0,0. This is annoying for user experience. */
+
+      scroll(0, 0);
+      /* Calculate the geometry that our content area should take */
+      var header = $(".header:visible");
+      var footer = $(".footer:visible");
+      var content = $(".content:visible");
+      var viewport_height = $(window).height();
+      
+      var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
+      
+      /* Trim margin/border/padding height */
+      content_height -= (content.outerHeight() - content.height());
+      content.height(content_height - (content_height *.25));
+    }; /* fixgeometry */
+
+    $(document).ready(function() {
+    	  fixgeometry();
+    	  $("#VerseContent").css('font-size','17px');
+    	  $("#autoplay").css('padding-top', '100px;')
+    	  $(window).bind("mobileinit orientationchange resize pageshow",  function(){fixgeometry();});
+    	  $("#sura").bind( "change", function(event, ui) {GoTo();});
+    	  //$(document).bind("mobileinit orientationchange resize pageshow", function(){fixgeometry();});
+    });
+</script> 
+</body>
+    
+
+</html>
