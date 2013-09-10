@@ -60,8 +60,7 @@ xmlhttp.onreadystatechange=function()
      	if( tav == "On" ){
          	document.getElementById('AudioSRC').src=jsondata.AudioSRC;
      		document.getElementById('AudioSRC').load();
-     		document.getElementById('AudioSRC').addEventListener('canplay',doplay,false);
-      		//document.getElementById('AudioSRC').play();
+     		document.getElementById('AudioSRC').play();
      	}
     }
   }
@@ -114,10 +113,7 @@ function GoTo(){
 	
 }
 
-var doplay = function(event){
-	document.getElementById('AudioSRC').removeEventListener('canplay', doplay, false);
-	document.getElementById('AudioSRC').play();
-}
+
 var handler = function(event) {
 	Next();
 	}
@@ -143,9 +139,10 @@ function decrease(){
 	fontSize = (parseInt(fontSize) - 1) + "px";
 	$("#VerseContent").css('font-size',fontSize);
 }
+var temp_audio_vol=0;
 </script>
 </head>
-<body onload="ToggleAutoPlay(1);">
+<body onload='Next();'>
 <div id='page' data-role='page'>
 <div class='header' id='header' data-role='header' data-position="fixed" style='text-align:center;'>Quran - Rashad Khalifa</div>
 <div data-role='content' data-theme='c' id='VerseContent' class='content'>[ Content ]</div>
@@ -156,8 +153,8 @@ function decrease(){
 <td><a href="" data-role="button" data-icon="arrow-l" onClick='Prev();' data-inline='true'>Prev</a></td>
 <td><a href="" data-role="button" data-icon="arrow-r" onClick='Next();' data-inline='true'>Next</a></td>
 <td><select name="autoplay" id="autoplay" data-role="slider" data-mini='true' title='Auto / Manual' data-inline='true' onChange='ToggleAutoPlay($("#autoplay").val())'>
-	<option value="1" selected>Auto</option>
-	<option value="0">Off</option>
+	<option value="1">Auto</option>
+	<option value="0" selected>Man</option>
 </select></td>
 </tr></table>
 </div>
@@ -203,8 +200,6 @@ function decrease(){
     	  $("#autoplay").css('padding-top', '100px;')
     	  $(window).bind("mobileinit orientationchange resize pageshow",  function(){fixgeometry();});
     	  $("#sura").bind( "change", function(event, ui) {GoTo();});
-    	  $('#VerseContent').bind("swipeleft",function(){Next();});
-    	  $('#VerseContent').bind("swiperight",function(){Prev();});    	  
     	  //$(document).bind("mobileinit orientationchange resize pageshow", function(){fixgeometry();});
     });
 </script> 

@@ -203,8 +203,6 @@ function decrease(){
     	  $("#autoplay").css('padding-top', '100px;')
     	  $(window).bind("mobileinit orientationchange resize pageshow",  function(){fixgeometry();});
     	  $("#sura").bind( "change", function(event, ui) {GoTo();});
-    	  $('#VerseContent').bind("swipeleft",function(){Next();});
-    	  $('#VerseContent').bind("swiperight",function(){Prev();});    	  
     	  //$(document).bind("mobileinit orientationchange resize pageshow", function(){fixgeometry();});
     });
 </script> 
